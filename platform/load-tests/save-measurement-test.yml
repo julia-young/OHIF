@@ -1,0 +1,17 @@
+config:
+  target: 'localhost:3000'
+  phases:
+    - duration: 60 # Test for 1 minute
+      arrivalRate: 5 # Simulate 5 users per second
+
+scenarios:
+  - flow:
+      - post:
+          url: '/save-measurement'
+          json:
+            measurement: { 'id': 1, 'length': 20 }
+      - think: 1 # Simulate waiting for lock or waiting for other task to complete
+      - post:
+          url: '/save-measurement'
+          json:
+            measurement: { 'id': 1, 'length': 30 }
